@@ -1,7 +1,6 @@
-//      © Jan Malte Grüttefien 2021
+//      © Jan Grüttefien 2021
 
-// variable declaration
-float x = 0;
+float x = 0;                                                                           // variable declaration
 int up_or_down = 0;
 int modethicc = 0;
 float thiccness = 1.0;
@@ -21,6 +20,7 @@ int fails = 0;
 int fail = 0;
 int cactus_or_rock = 0;
 int speed = 1;
+int play_pause = 0;
 
 void setup() {
     size(1000,600);
@@ -28,21 +28,26 @@ void setup() {
 }
 
 void draw() {
-    if(xPos == width) round = round + 1;                                                // increase round
-    if(round % 10 == 0 && round != 0 && xPos == width) speed = speed + 2;               // increase speed every 10 rounds
-    if(speed >= 10) speed = 10;                                                         // speed wont increase after round 40 and upwards
-    autorun();                                                                          // check if autorun bot is turned on/off by user
-    nsfw();                                                                             // check if nsfw mode is turned on/off by user
-    debugmode();                                                                        // check if DevMode is turned on/off by user
-    scoreboard();                                                                       // update scoreboard
-    fill(#594b1d);                                                                      // sandy looking desert is created
-    rect(0, 400, width, height);
-    if(keyPressed == true && key == ' '|| x != 0) jump(7.5);                            // Amogus will jump if <space> is pressed. Jump won't be interrupted by new user input while already in jump
-    else jump(0);                                                                       // Amogus won't jump if <space> isn't pressed
-    if(round % 2 == 0) obstacleRock();                                                  // if round is even, obstacle rock is chosen
-    if(round % 2 != 0) obstacleCactus();                                                // if round is odd, obstacle cactus is chosen
-    star1();                                                                            // stars will move using the daisy chain principle
-    endgame();                                                                          // if user had 10 fails, game over screen will appear
+    if(play_pause == 1) {                                                               // actual game
+      if(xPos == width) round = round + 1;                                              // increase round
+      if(round % 10 == 0 && round != 0 && xPos == width) speed = speed + 2;             // increase speed every 10 rounds
+      if(speed >= 10) speed = 10;                                                       // speed wont increase after round 40 and upwards
+      autorun();                                                                        // check if autorun bot is turned on/off by user
+      nsfw();                                                                           // check if nsfw mode is turned on/off by user
+      debugmode();                                                                      // check if DevMode is turned on/off by user
+      scoreboard();                                                                     // update scoreboard
+      fill(#594b1d);                                                                    // sandy looking desert is created
+      rect(0, 400, width, height);
+      if(keyPressed == true && key == ' '|| x != 0) jump(7.5);                          // Amogus will jump if <space> is pressed. Jump won't be interrupted by new user input while already in jump
+      else jump(0);                                                                     // Amogus won't jump if <space> isn't pressed
+      if(round % 2 == 0) obstacleRock();                                                // if round is even, obstacle rock is chosen
+      if(round % 2 != 0) obstacleCactus();                                              // if round is odd, obstacle cactus is chosen
+      star1();                                                                          // stars will move using the daisy chain principle
+      endgame();                                                                        // if user had 10 fails, game over screen will appear
+    }
+    if(play_pause == 0) {                                                               // show the start/welcome screen
+        startgame();
+    }
 }
 
 void obstacleCactus() {                                                                 // cactus obstacle
@@ -71,7 +76,7 @@ void collision_detection_Cactus() {                                             
         stroke(255);
     }
     
-    fail = 0;                                                                           // actual crash detection if line between Amogus and obstacle is smaller then specific value
+    fail = 0;                                                                           // actual crash detection if line between Amogus and obstacle is smaller than specific value
     if(dist(xPos-20, yPos - 25, 100, 400 - x) <= 30) fail = 1;
     if(dist(xPos-20, yPos - 60, 100, 400 - x) <= 30) fail = 1;
     if(dist(xPos, yPos - 80, 100, 400 - x) <= 20) fail = 1;
@@ -158,12 +163,10 @@ void jump(float var_jump) {                                                     
     strokeWeight(15);
     line(100 - 30, 375 - x, 100 - 30, 355 - x);
     if(nsfw_mode == 1) {                                                                // other Amogus body parts are created if nsfw mode is turned on
-        //"circle"
-        stroke(255, 182, 193);
+        stroke(255, 182, 193);                                                          //"circle"
         strokeWeight(15 * thiccness);
-        line(100, 350 + 35 - x, 100, 350 + 35 - x);
-        //"stick"
-        stroke(255, 182, 193);
+        line(100, 350 + 35 - x, 100, 350 + 35 - x);  
+        stroke(255, 182, 193);                                                          //"stick"
         strokeWeight(10 * thiccness);
         line(100, 350 + 30 - thiccness - x, 100 + 30 * thiccness, 350 + 30 - thiccness - x);
     }
@@ -245,6 +248,7 @@ void autorun() {                                                                
 }
 
 void scoreboard() {                                                                     // scoreboard is created
+    textAlign(LEFT);
     background(0);
     text("Round:", 50, 50);                                                             // round is displayed
     text(round, 100, 50);
@@ -273,16 +277,40 @@ void scoreboard() {                                                             
 }
 
 void endgame() {                                                                        // game over screen
-    if(fails > 9) {
-        fill(0);
-        rect(0, 0, 1000, 600);
+    if(fails >= 10) play_pause = 0;                                                     // if user failed 10 times
+}
+
+void startgame() {
+    if(fails >= 10) {
         textSize(100);
         fill(255);
-        text("GAME", width/2-300, height/2);                                            // display game over
-        text("OVER", width/2, height/2);
+        textAlign(CENTER);
+        text("GAME OVER", width / 2, height/2 - 50);                                    // display game over
         textSize(32);
-        text("Score:", width/2 - 100, height/2 + 100);                                  // display reached score (score = rounds)
-        text(round, width/2 + 5, height/2 + 100);
-        noLoop();
+        textAlign(LEFT);
+        text("Score:", width / 2 - 100, height / 2);                                    // display reached score (score = rounds)
+        text(round, width / 2 + 40, height/ 2);
+        textAlign(CENTER);
+        text("Press 'space' to play again", width/2, height / 2 + 150);                 // restart game option
+        if(keyPressed == true && key == ' ') {
+            play_pause = 1;
+            textSize(10);
+            fails = 0;
+            round = 0;
+            speed = 1;
+        }
+    }
+    else {                                                                              // display welcome screen
+        fill(0);
+        rect(0, 0, 1000, 600);
+        textSize(70);
+        fill(255);
+        textAlign(CENTER);
+        text("Welcome, Imposter", width / 2, height / 2 - 100);
+        textSize(32);
+        text("Press 'space' to play", width/2, height / 2 + 100);                       // start game with <space>     
+        if(keyPressed == true && key == ' ') play_pause = 1;
+        textSize(10);
+        fails = 0;
     }
 }
