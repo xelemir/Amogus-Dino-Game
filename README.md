@@ -25,5 +25,3 @@ Controls:<br>
 
 "z" turns on developer mode. This draws lines between the character and the obstacle to help you understand how the obstacle detection works.<br>
 "t" turns off developer mode.<br>
-
-Important: When the bot is turned on you and you want to use another mode simultaneously, you must press "space" a few times to make sure the bot works properly.
