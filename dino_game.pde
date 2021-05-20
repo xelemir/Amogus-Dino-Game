@@ -8,11 +8,11 @@ int nsfw_mode = 0;
 int xPos = width;
 int yPos = 400;
 int xPosStar1 = width/2;
-int yPosStar1 = 100;
+int yPosStar1 = 200;
 int xPosStar2 = width;
 int yPosStar2 = 150;
 int xPosStar3 = 300;
-int yPosStar3 = 200;
+int yPosStar3 = 100;
 boolean autorun = false;
 boolean debugmode = false;
 int round = 0;
@@ -21,6 +21,7 @@ int fail = 0;
 int cactus_or_rock = 0;
 int speed = 1;
 int play_pause = 0;
+boolean night = true;
 
 void setup() {
     size(1000,600);
@@ -28,25 +29,44 @@ void setup() {
 }
 
 void draw() {
-    if(play_pause == 1) {                                                               // actual game
-      if(xPos == width) round = round + 1;                                              // increase round
+    if(play_pause == 1) {
+      if(xPos == width) round = round + 1;
       if(round % 10 == 0 && round != 0 && xPos == width) speed = speed + 2;             // increase speed every 10 rounds
       if(speed >= 10) speed = 10;                                                       // speed wont increase after round 40 and upwards
       autorun();                                                                        // check if autorun bot is turned on/off by user
       nsfw();                                                                           // check if nsfw mode is turned on/off by user
       debugmode();                                                                      // check if DevMode is turned on/off by user
+      scene();                                                                          // decide if day or night time
+      star1();                                                                          // stars will move using the daisy chain principle
       scoreboard();                                                                     // update scoreboard
-      fill(#594b1d);                                                                    // sandy looking desert is created
-      rect(0, 400, width, height);
       if(keyPressed == true && key == ' '|| x != 0) jump(7.5);                          // Amogus will jump if <space> is pressed. Jump won't be interrupted by new user input while already in jump
       else jump(0);                                                                     // Amogus won't jump if <space> isn't pressed
       if(round % 2 == 0) obstacleRock();                                                // if round is even, obstacle rock is chosen
       if(round % 2 != 0) obstacleCactus();                                              // if round is odd, obstacle cactus is chosen
-      star1();                                                                          // stars will move using the daisy chain principle
       endgame();                                                                        // if user had 10 fails, game over screen will appear
     }
+
     if(play_pause == 0) {                                                               // show the start/welcome screen
         startgame();
+    }
+}
+
+void scene() {
+    if(((round / 10) % 10) % 2 == 0) {
+        night = true;                                                                   // night scene
+        background(0);                                                                  // dark sky
+        fill(#594b1d);                                                                  // desert at night
+        noStroke();
+        rect(0, 400, width, height);
+        fill(255);
+    }
+    else {
+        night = false;                                                                  // day scene
+        background(#87ceeb);                                                            // blue sky
+        fill(#f0bb48);                                                                  // desert at day
+        noStroke();
+        rect(0, 400, width, height);
+        fill(0);
     }
 }
 
@@ -91,10 +111,11 @@ void collision_detection_Cactus() {                                             
 void obstacleRock() {                                                                   // rock obstacle
     xPos = xPos - 10 - speed;                                                           // obstacle movement towards left side with possible speed increasement
     if(xPos < -50) xPos = width;                                                        // obstacle back to right side if left side is reached
-    fill(#808080);                                                                      
+    fill(#808080);
+    noStroke();                                                                      
     triangle(xPos, yPos, xPos+50, yPos, xPos+25, yPos-75);
     triangle(xPos-20, yPos, xPos+25, yPos, xPos, yPos-50);
-    stroke(255);
+    noStroke();
     collision_detection_Rock();                                                         // check if Amogus crashed with obstacle
     fails = fails + fail;                                                               // if chashed, fails += 1
 }
@@ -170,6 +191,7 @@ void jump(float var_jump) {                                                     
         strokeWeight(10 * thiccness);
         line(100, 350 + 30 - thiccness - x, 100 + 30 * thiccness, 350 + 30 - thiccness - x);
     }
+
     strokeWeight(1);
     stroke(255, 255, 255);
 }
@@ -178,15 +200,25 @@ void star1() {                                                                  
     xPosStar1 = xPosStar1 - 1;
     if(xPosStar1 <= 0) xPosStar1 = width;
     fill(#CCCC00);
-    circle(xPosStar1, yPosStar1, 10);
-    fill(255);
-    star2();                                                                            // star 2 is triggered
+    if(night == false) {                                                                // if time is day, star1 is sun and star 2 and 3 are not created
+        noStroke();
+        circle(xPosStar1, yPosStar1, 50);
+        fill(255);
+    }
+
+    else {
+        noStroke();
+        circle(xPosStar1, yPosStar1, 10);
+        fill(255);
+        star2();                                                                        // star 2 is triggered
+    }
 }
 
 void star2() {                                                                          // star 2 is created
     xPosStar2 = xPosStar2 - 3;
     if(xPosStar2 <= 0) xPosStar2 = width;
     fill(#CCCC00);
+    noStroke();
     circle(xPosStar2, yPosStar2, 10);
     fill(255);
     star3();                                                                            // star 3 is triggered
@@ -196,6 +228,7 @@ void star3() {                                                                  
     xPosStar3 = xPosStar3 - 2;
     if(xPosStar3 <= 0) xPosStar3 = width;
     fill(#CCCC00);
+    noStroke();
     circle(xPosStar3, yPosStar3, 10);
     fill(255);
 }
@@ -249,7 +282,6 @@ void autorun() {                                                                
 
 void scoreboard() {                                                                     // scoreboard is created
     textAlign(LEFT);
-    background(0);
     text("Round:", 50, 50);                                                             // round is displayed
     text(round, 100, 50);
     text("Fails:", 50, 80);                                                             // fails are displayed
@@ -274,6 +306,7 @@ void scoreboard() {                                                             
         text("NSFW:", width - 100, 170);
         text("on", width - 50, 170);
     }
+    text("Amogus Game by Jan Grüttefien", 10, height - 10);
 }
 
 void endgame() {                                                                        // game over screen
@@ -311,6 +344,8 @@ void startgame() {
         text("Press 'space' to play", width/2, height / 2 + 100);                       // start game with <space>     
         if(keyPressed == true && key == ' ') play_pause = 1;
         textSize(10);
+        textAlign(LEFT);
+        text("Amogus Game by Jan Grüttefien", 10, height - 10);
         fails = 0;
     }
 }
