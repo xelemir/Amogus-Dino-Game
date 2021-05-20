@@ -37,4 +37,4 @@ Desert during daytime
 -----
 
 ![imposter2](https://user-images.githubusercontent.com/68973133/118985969-379db680-b97f-11eb-9d15-0ac877ba141a.png)
-Desert during nighttime with DevMode enabled
+Desert during night-time with DevMode enabled
