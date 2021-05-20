@@ -281,6 +281,8 @@ void autorun() {                                                                
 }
 
 void scoreboard() {                                                                     // scoreboard is created
+    if(night == true) fill(255);
+    else fill(0);
     textAlign(LEFT);
     text("Round:", 50, 50);                                                             // round is displayed
     text(round, 100, 50);
@@ -288,7 +290,6 @@ void scoreboard() {                                                             
     text(fails, 100, 80);
     text("Speed:", 50, 110);                                                            // speed is displayed
     text((speed+1)/2, 100, 110);
-    // right side
     text("RTX:", width - 100, 50);                                                      // RTX obviously always on (GeForce RTX 3090 required)
     text("on",  width - 50, 50);
     text("FPS:",  width - 100, 80);                                                     // FPS are displayed
