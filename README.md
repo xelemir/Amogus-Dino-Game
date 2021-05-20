@@ -1,4 +1,4 @@
-# dino_game_amogus
+# Amogus-Dino-Game
 Inspired by the classic offline dinosaur game by Google with Among Us references, coded in the processing language.<br>
 
 -----
