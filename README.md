@@ -16,16 +16,16 @@ After 10 fails the game will end.<br>
 
 # Controls
 
-"space" to jump.<br>
+```space``` to jump.<br>
 
-"p" turns on NSFW mode. Dont judge me.<br>
-"o" turns off NSFW mode.<br>
+```p``` turns on NSFW mode. Dont judge me.<br>
+```o``` turns off NSFW mode.<br>
 
-"i" turns on a bot which does the job for you.<br>
-"u" turns that bot off.<br>
+```i``` turns on a bot which does the job for you.<br>
+```u``` turns that bot off.<br>
 
-"z" turns on developer mode. This draws lines between the character and the obstacle to help you understand how the obstacle detection works.<br>
-"t" turns off developer mode.<br>
+```z``` turns on developer mode. This draws lines between the character and the obstacle to help you understand how the obstacle detection works.<br>
+```t``` turns off developer mode.<br>
 
 -----
 
