@@ -1,27 +1,11 @@
-/**
- * Catus class extends Obstacle
- *
- * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
- */
 class Cactus extends Obstacle {
     boolean isActive;
     
-    /**
-     * Constructor for objects of class Cactus
-     */
     public Cactus() {
         super();
         this.isActive = true;
     }
 
-    /**
-     * Move the obstacle from right to left
-     *
-     * @param speed the speed of the obstacle
-     * @param whether the debug mode is active or not
-     */
     @Override
     public void moveObstacle(int speed, boolean debugMode) {
         super.newRound = false;
@@ -53,20 +37,11 @@ class Cactus extends Obstacle {
         }
     }
 
-    /**
-     * Activate this obstacle
-     */
     @Override
     public void activate() {
         this.isActive = true;
     }
 
-    /**
-     * Check if the obstacle collides with the character
-     *
-     * @param debugMode whether the debug mode is active or not
-     * @return true if the obstacle collides with the character
-     */
     @Override
     public boolean collisionDetected(boolean debugMode) {
         float characterPos = amogus.getXpos();
@@ -93,13 +68,7 @@ class Cactus extends Obstacle {
         }
         return false;
     }
-
-    /**
-     * Check if the obstacle is displayed
-     *
-     * @return true if the obstacle is displayed
-     */
-    @Override
+  
     public boolean isDisplayed() {
         return this.isActive;
     }

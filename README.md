@@ -18,14 +18,15 @@ After 10 fails the game will end.<br>
 
 ```space``` to jump.<br>
 
-```p``` turns on NSFW mode. Dont judge me.<br>
-```o``` turns off NSFW mode.<br>
 
-```i``` turns on a bot which does the job for you.<br>
-```u``` turns that bot off.<br>
+```q``` turns on developer mode. This draws lines between the character and the obstacle to help you understand how the obstacle detection works.<br>
+```w``` turns off developer mode.<br>
 
-```z``` turns on developer mode. This draws lines between the character and the obstacle to help you understand how the obstacle detection works.<br>
-```t``` turns off developer mode.<br>
+```e``` turns on a bot which does the job for you.<br>
+```r``` turns that bot off.<br>
+
+```t``` turns on NSFW mode.<br>
+```z``` turns off NSFW mode.<br>
 
 -----
 
