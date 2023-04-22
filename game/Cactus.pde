@@ -1,12 +1,12 @@
 /**
- * Catus class extends Obstacle
+ * Implementation of the Cactus obstacle
  *
  * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
+ * @version 1.1
+ * @date 2023-04-22
  */
-class Cactus extends Obstacle {
-    boolean isActive;
+public class Cactus extends Obstacle {
+    private boolean isActive;
     
     /**
      * Constructor for objects of class Cactus
@@ -23,11 +23,11 @@ class Cactus extends Obstacle {
      * @param whether the debug mode is active or not
      */
     @Override
-    public void moveObstacle(int speed, boolean debugMode) {
+    public void moveObstacle(final int speed, final boolean debugMode) {
         super.newRound = false;
         if (this.isActive) {
             super.xPos = super.xPos - 10 - speed;
-            if(super.xPos < -50) {
+            if (super.xPos < -50) {
                 super.xPos = width;
                 super.newRound = true;
                 this.isActive = false;
@@ -47,7 +47,7 @@ class Cactus extends Obstacle {
                 super.newRound = true;
                 this.isActive = false;
                 rock.activate();
-                super.fails += 1;
+                super.fails ++;
                 delay(1000);
             }
         }
@@ -68,12 +68,12 @@ class Cactus extends Obstacle {
      * @return true if the obstacle collides with the character
      */
     @Override
-    public boolean collisionDetected(boolean debugMode) {
+    public boolean collisionDetected(final boolean debugMode) {
         float characterPos = amogus.getXpos();
-        if (debugMode == true) {
+        if (debugMode) {
             stroke(#FF0000);
-            line(super.xPos-20, super.yPos - 25, 100, 400 - characterPos);
-            line(super.xPos-20, super.yPos - 60, 100, 400 - characterPos);
+            line(super.xPos - 20, super.yPos - 25, 100, 400 - characterPos);
+            line(super.xPos - 20, super.yPos - 60, 100, 400 - characterPos);
             line(super.xPos, super.yPos - 80, 100, 400 - characterPos);
             line(super.xPos + 25, super.yPos - 45, 100, 400 - characterPos);
             stroke(255);

@@ -1,12 +1,12 @@
 /**
- * Rock class extends Obstacle
+ * Implementation of the Rock obstacle
  *
  * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
+ * @version 1.1
+ * @date 2023-04-22
  */
-class Rock extends Obstacle {
-    boolean isActive;
+public class Rock extends Obstacle {
+    private boolean isActive;
     
     /**
      * Constructor for objects of class Rock
@@ -23,11 +23,11 @@ class Rock extends Obstacle {
      * @param whether the debug mode is active or not
      */
     @Override
-    public void moveObstacle(int speed, boolean debugMode) {
+    public void moveObstacle(final int speed, final boolean debugMode) {
         super.newRound = false;
         if (this.isActive) {
             super.xPos = super.xPos - 10 - speed;
-            if(super.xPos < -50) {
+            if (super.xPos < -50) {
                 super.xPos = width;
                 super.newRound = true;
                 this.isActive = false;
@@ -36,14 +36,14 @@ class Rock extends Obstacle {
             fill(#808080);
             noStroke();                                                                      
             triangle(super.xPos, super.yPos, super.xPos + 50, super.yPos, super.xPos + 25, super.yPos - 75);
-            triangle(super.xPos-20, super.yPos, super.xPos + 25, super.yPos, super.xPos, super.yPos - 50);
+            triangle(super.xPos - 20, super.yPos, super.xPos + 25, super.yPos, super.xPos, super.yPos - 50);
             noStroke();
             if (this.collisionDetected(debugMode)) {
                 super.xPos = width;
                 super.newRound = true;
                 this.isActive = false;
                 cactus.activate();
-                super.fails += 1;
+                super.fails ++;
                 delay(1000);
             }
         }
@@ -64,27 +64,27 @@ class Rock extends Obstacle {
      * @return true if the obstacle collides with the character
      */
     @Override
-    public boolean collisionDetected(boolean debugMode) {
+    public boolean collisionDetected(final boolean debugMode) {
         float characterPos = amogus.getXpos();
-        if(debugMode == true) {
+        if (debugMode) {
             stroke(#FF0000);
-            line(super.xPos-20, super.yPos, 100, 400 - characterPos);
-            line(super.xPos, super.yPos-50, 100, 400 - characterPos);
-            line(super.xPos, super.yPos-25, 100, 400 - characterPos);
-            line(super.xPos+25, super.yPos-50, 100, 400 - characterPos);
+            line(super.xPos - 20, super.yPos, 100, 400 - characterPos);
+            line(super.xPos, super.yPos - 50, 100, 400 - characterPos);
+            line(super.xPos, super.yPos - 25, 100, 400 - characterPos);
+            line(super.xPos + 25, super.yPos - 50, 100, 400 - characterPos);
             stroke(255);
         }
       
-        if(dist(super.xPos-20, super.yPos, 100, 400 - characterPos) <= 20) {
+        if (dist(super.xPos - 20, super.yPos, 100, 400 - characterPos) <= 20) {
             return true;
         }
-        if(dist(super.xPos, super.yPos-50, 100, 400 - characterPos) <= 10) {
+        if (dist(super.xPos, super.yPos - 50, 100, 400 - characterPos) <= 10) {
             return true;
         }
-        if(dist(super.xPos, super.yPos-25, 100, 400 - characterPos) <= 20) {
+        if (dist(super.xPos, super.yPos - 25, 100, 400 - characterPos) <= 20) {
             return true;
         }
-        if(dist(super.xPos+25, super.yPos-50, 100, 400 - characterPos) <= 25) {
+        if (dist(super.xPos + 25, super.yPos - 50, 100, 400 - characterPos) <= 25) {
             return true;
         }
         return false;

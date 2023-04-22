@@ -2,15 +2,15 @@
  * Class to create a star
  *
  * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
+ * @version 1.1
+ * @date 2023-04-22
  */
-class StarA {
-     int xPos;
-     int yPos;
-     int starColor;
-     int speed;
-     int size;
+public class StarA {
+    private int xPos;
+    private int yPos;
+    private final int starColor;
+    private int speed;
+    private int size;
 
     /**
      * Constructor for objects of class Star
@@ -19,7 +19,7 @@ class StarA {
      * @param yPos The y position of the star   
      * @param speed The speed of the star
      */
-    StarA(int xPos, int yPos, int speed) {
+    StarA(final int xPos, final int yPos, final int speed) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.starColor = #CCCC00;
@@ -49,7 +49,7 @@ class StarA {
         } else if (asSun) {
             fill(this.starColor);
             noStroke();
-            circle(this.xPos, this.yPos, this.size*10);
+            circle(this.xPos, this.yPos, this.size * 10);
         }
     }
 }

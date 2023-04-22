@@ -2,11 +2,11 @@
  * Scene class creates the background and the ground of the game.
  * 
  * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
+ * @version 1.1
+ * @date 2023-04-22
  */
 public class Scene {
-    boolean night;
+    private boolean night;
 
     /**
      * Constructor for objects of class Scene
@@ -21,7 +21,7 @@ public class Scene {
      * @param round The current round of the game.
      */
     public void create(int round) {
-        if(((round / 10) % 10) % 2 == 0) {
+        if (((round / 10) % 10) % 2 == 0) {
             night = true;
             background(0);
             fill(#594b1d);

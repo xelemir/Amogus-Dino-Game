@@ -2,15 +2,15 @@
  * Flags class to turn extra features on and off
  *
  * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
+ * @version 1.1
+ * @date 2023-04-22
  */
 public class Flags {
-    boolean debugMode;
-    boolean cheatMode;
-    boolean nsfwMode;
-    char lastKey;
-    boolean blockInput;
+    private boolean debugMode;
+    private boolean cheatMode;
+    private boolean nsfwMode;
+    private char lastKey;
+    private boolean blockInput;
 
     /**
      * Constructor for Flags class

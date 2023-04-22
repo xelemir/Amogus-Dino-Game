@@ -1,5 +1,5 @@
 int speed = 1;
-int play_pause = 0;
+boolean gameIsActive = false;
 boolean night = true;
 int fails = 0;
 int round = 0;
@@ -15,7 +15,7 @@ Scene scene;
 Flags flags;
 
 
-void setup() {
+public void setup() {
     size(1000,600);
     frameRate(60);
     star1 = new StarA(width/2, 200, 1);
@@ -29,13 +29,15 @@ void setup() {
 }
 
 public void draw() {    
-    if(play_pause == 1) {
-        if(cactus.isNewRound() || rock.isNewRound()) {
-            round += 1;
-            if(round % 10 == 0 && round != 0) {
+    if (gameIsActive) {
+        if (cactus.isNewRound() || rock.isNewRound()) {
+            round ++;
+            if (round % 10 == 0 && round != 0) {
                 speed = speed + 2;
             }
-            if(speed >= 10) speed = 10;
+            if (speed >= 10) {
+                speed = 10;
+            }
         }
         
         
@@ -53,7 +55,7 @@ public void draw() {
         endgame(cactus.fails + rock.fails);
     }
 
-    if(play_pause == 0) {
+    else {
         startgame();
     }
 }
@@ -62,7 +64,7 @@ public void draw() {
  * This function implements the autorun mode.
  * @param cheatOn true if the autorun mode is enabled
  */
-void autorun(boolean cheatOn) {
+public void autorun(final boolean cheatOn) {
     if(cheatOn) {
         if (cactus.isDisplayed()) {
             xPos = cactus.getXpos();
@@ -72,7 +74,7 @@ void autorun(boolean cheatOn) {
             yPos = rock.getYpos();
         }
 
-        if(dist(xPos-20, yPos, 100, 400 - amogus.getXpos()) <= 150+speed*15) {
+        if (dist(xPos - 20, yPos, 100, 400 - amogus.getXpos()) <= 150 + speed * 15) {
             keyPressed = true;
             key = ' ';
         } else {
@@ -85,16 +87,20 @@ void autorun(boolean cheatOn) {
  * This function shows the scoreboard.
  * @param fails the number of fails
  */
-void scoreboard(int fails) {
-    if(night == true) fill(255);
-    else fill(0);
+public void scoreboard(final int fails) {
+    if (night) {
+        fill(255);
+    } else {
+        fill(0);
+    }
+
     textAlign(LEFT);
     text("Round:", 50, 50);
     text(round, 100, 50);
     text("Fails:", 50, 80);
     text(fails, 100, 80);
     text("Speed:", 50, 110);
-    text((speed+1)/2, 100, 110);
+    text((speed + 1) / 2, 100, 110);
     text("RTX:", width - 100, 50);
     text("on",  width - 50, 50);
     text("FPS:",  width - 100, 80);
@@ -119,27 +125,29 @@ void scoreboard(int fails) {
  * This function shows the endscreen.
  * @param fails the number of fails
  */
-void endgame(int fails) {
-    if(fails >= 10) play_pause = 0;
+public void endgame(final int fails) {
+    if (fails >= 10) {
+        gameIsActive = false;
+    }
 }
 
 /* 
  * This function shows the startscreen.
  */
-void startgame() {
-    if(fails >= 10) {
+public void startgame() {
+    if (fails >= 10) {
         textSize(100);
         fill(255);
         textAlign(CENTER);
-        text("GAME OVER", width / 2, height/2 - 50);
+        text("GAME OVER", width / 2, height / 2 - 50);
         textSize(32);
         textAlign(LEFT);
         text("Score:", width / 2 - 100, height / 2);
         text(round, width / 2 + 40, height/ 2);
         textAlign(CENTER);
         text("Press 'space' to play again", width/2, height / 2 + 150);
-        if(keyPressed == true && key == ' ') {
-            play_pause = 1;
+        if (keyPressed && key == ' ') {
+            gameIsActive = true;
             textSize(10);
             fails = 0;
             round = 0;
@@ -154,7 +162,9 @@ void startgame() {
         text("Welcome, Imposter", width / 2, height / 2 - 100);
         textSize(32);
         text("Press 'space' to play", width/2, height / 2 + 100);
-        if(keyPressed == true && key == ' ') play_pause = 1;
+        if (keyPressed && key == ' ') {
+            gameIsActive = true;
+        }
         textSize(10);
         textAlign(LEFT);
         text("Amogus Game by Jan Grüttefien", 10, height - 10);

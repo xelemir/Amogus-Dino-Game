@@ -2,18 +2,18 @@
  * Class for a jumping Amogus character
  *
  * @author Jan Grüttefien
- * @version 1.0
- * @date 2023-01-20
+ * @version 1.1
+ * @date 2023-04-22
  */
 class GameCharacter {
-    int bodyColor;
-    int eyeColor;
-    int dickColor;
-    float jumpVar;
-    float xSin;
-    boolean nsfwOn;
-    float thiccness;
-    boolean modethicc = true;
+    private final int bodyColor;
+    private final int eyeColor;
+    private final int dickColor;
+    private float jumpVar;
+    private float xSin;
+    private boolean nsfwOn;
+    private float thiccness;
+    private boolean modethicc = true;
     
     /**
      * Constructor for a Amogus character with jumping ability
@@ -35,22 +35,22 @@ class GameCharacter {
      +
      * @param nsfw If the character should contain nsfw content
      */
-    public void drawCharacter(boolean nsfw) {
+    public void drawCharacter(final boolean nsfw) {
         this.nsfwOn = nsfw;
-        if(keyPressed == true && key == ' '|| this.jumpVar != 0) {
+        if (keyPressed && key == ' '|| this.jumpVar != 0) {
             this.jump();
         }
         
-        if(nsfwOn) {
+        if (nsfwOn) {
             if (modethicc) {
-                thiccness = thiccness - 0.2;
+                thiccness -= 0.2;
                 if (thiccness <= 1) {
                     modethicc = false;
                 }
             }
 
             if (!modethicc) {
-                thiccness = thiccness + 0.2;
+                thiccness += 0.2;
                 if (thiccness >= 2) {
                     modethicc = true;
                 }
@@ -84,7 +84,7 @@ class GameCharacter {
      * Makes the character jump up and down by using a sine function
      */
     public void jump() {
-        this.xSin = this.xSin + PI/40;
+        this.xSin = this.xSin + PI / 40;
         if (this.xSin > 2 * PI || sin(this.xSin) < 0) {
             this.xSin = 0;
         }
